@@ -16,6 +16,19 @@ export default function SingleMovie() {
             });
     }, [id]);
 
+    const renderStars = (rating) => {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+            stars.push(
+                <i
+                    key={i}
+                    className={`bi ${i <= rating ? "bi-star-fill text-warning" : "bi-star text-muted"}`}
+                ></i>
+            );
+        }
+        return stars;
+    };
+
     return (
         <>
             <div className="container my-5">
@@ -26,6 +39,7 @@ export default function SingleMovie() {
                             src={`http://localhost:3000/images/${movie.image}`}
                             className="img-fluid rounded shadow"
                             alt={movie.title}
+                            style={{ height: "600px", objectFit: "cover" }}
                         />
                     </div>
 
@@ -42,15 +56,16 @@ export default function SingleMovie() {
 
             <div className="container my-5">
                 <h2 className="mb-4">Reviews</h2>
-                {movie.reviews && movie.reviews.length > 0 ? (
+                {movie.review && movie.review.length > 0 ? (
                     <ul className="list-group">
-                        {movie.reviews.map((review) => (
+                        {movie.review.map((review) => (
                             <li key={review.id} className="list-group-item">
-                                <h5 className="fw-bold">{review.reviewer_name}</h5>
+                                <h5 className="fw-bold">{review.name}</h5>
                                 <p>{review.text}</p>
-                                <p className="text-muted">
-                                    <strong>Rating:</strong> {review.vote}/10
-                                </p>
+                                <div className="d-flex align-items-center">
+                                    <span className="me-2"><strong>Rating:</strong></span>
+                                    <div>{renderStars(review.vote)}</div>
+                                </div>
                             </li>
                         ))}
                     </ul>
