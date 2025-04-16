@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function Home() {
     const [movies, setMovies] = useState([]);
@@ -41,12 +42,12 @@ export default function Home() {
                                     <p className="card-text text-muted">
                                         {movie.abstract?.substring(0, 100)}...
                                     </p>
-                                    <a
-                                        href={`/movies/${movie.id}`}
+                                    <Link
+                                        to={`/movies/${movie.id}`}
                                         className="btn btn-outline-primary mt-auto"
                                     >
                                         View Details
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
