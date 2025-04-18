@@ -1,15 +1,22 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Reviews from "../Components/Reviews";
+import MovieReviewForm from "../Components/MovieReviewForm";
 
 export default function SingleMovie() {
     const { id } = useParams();
     const [movie, setMovie] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch('http://localhost:3000/api/v1/movies/' + id)
             .then(res => res.json())
             .then(data => {
+
+                if (data?.error) {
+                    navigate("/404");
+                    return;
+                }
                 setMovie(data);
             })
             .catch(err => {
@@ -41,6 +48,8 @@ export default function SingleMovie() {
                     </div>
                 </div>
             </div>
+
+            <MovieReviewForm movieId={movie.id} />
 
             <Reviews reviews={movie.review} />
         </>
