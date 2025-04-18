@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import HomeMovieCard from "../Components/HomeMovieCard";
 
 export default function Home() {
     const [movies, setMovies] = useState([]);
@@ -29,28 +29,7 @@ export default function Home() {
                 <h2 className="text-center mb-4 text-primary">Our Movie Collection</h2>
                 <div className="row g-4">
                     {movies.map((movie) => (
-                        <div className="col-md-4" key={movie.id}>
-                            <div className="card h-100 shadow-sm">
-                                <img
-                                    src={`http://localhost:3000/images/${movie.image}`}
-                                    className="card-img-top"
-                                    alt={movie.title}
-                                    style={{ height: "300px", objectFit: "cover" }}
-                                />
-                                <div className="card-body d-flex flex-column">
-                                    <h5 className="card-title text-primary">{movie.title}</h5>
-                                    <p className="card-text text-muted">
-                                        {movie.abstract?.substring(0, 100)}...
-                                    </p>
-                                    <Link
-                                        to={`/movies/${movie.id}`}
-                                        className="btn btn-outline-primary mt-auto"
-                                    >
-                                        View Details
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
+                        <HomeMovieCard movie={movie} key={movie.id} />
                     ))}
                 </div>
             </div>
