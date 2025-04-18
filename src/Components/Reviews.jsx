@@ -13,25 +13,37 @@ export default function Reviews({ reviews }) {
         return stars;
     };
 
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
     return (
         <div className="container my-5">
-            <h2 className="mb-4">Reviews</h2>
+            <h2 className="mb-4 text-center">Reviews</h2>
             {reviews && reviews.length > 0 ? (
-                <ul className="list-group">
+                <div className="row">
                     {reviews.map((review) => (
-                        <li key={review.id} className="list-group-item">
-                            <h5 className="fw-bold">{review.name}</h5>
-                            <p>{review.text}</p>
-                            <div className="d-flex align-items-center">
-                                <span className="me-2"><strong>Rating:</strong></span>
-                                <div>{renderStars(review.vote)}</div>
+                        <div key={review.id} className="col-md-6 mb-4">
+                            <div className="card shadow-sm border-0">
+                                <div className="card-body">
+                                    <div className="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 className="fw-bold mb-0">{review.name}</h5>
+                                        <small className="text-muted">{formatDate(review.created_at)}</small>
+                                    </div>
+                                    <p className="text-muted">{review.text}</p>
+                                    <div className="d-flex align-items-center">
+                                        <span className="me-2"><strong>Rating:</strong></span>
+                                        <div>{renderStars(review.vote)}</div>
+                                    </div>
+                                </div>
                             </div>
-                        </li>
+                        </div>
                     ))}
-                </ul>
+                </div>
             ) : (
-                <p className="text-muted">No reviews available for this movie.</p>
+                <p className="text-muted text-center">No reviews available for this movie.</p>
             )}
         </div>
-    )
+    );
 }
