@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Reviews from "../Components/Reviews";
 import MovieReviewForm from "../Components/MovieReviewForm";
+import { useContext } from "react";
+import GlobalContext from "../Context/GlobalContext";
 
 export default function SingleMovie() {
     const { id } = useParams();
     const [movie, setMovie] = useState({});
     const navigate = useNavigate();
+    const { setIsLoading } = useContext(GlobalContext);
 
     useEffect(() => {
         fetch('http://localhost:3000/api/v1/movies/' + id)
@@ -21,6 +24,9 @@ export default function SingleMovie() {
             })
             .catch(err => {
                 console.log(err);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }, [id]);
 

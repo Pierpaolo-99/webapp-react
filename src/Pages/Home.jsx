@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import HomeMovieCard from "../Components/HomeMovieCard";
+import { useContext } from "react";
+import GlobalContext from "../Context/GlobalContext";
 
 export default function Home() {
     const [movies, setMovies] = useState([]);
+
+    const { setIsLoading } = useContext(GlobalContext);
 
     useEffect(() => {
         fetch('http://localhost:3000/api/v1/movies')
@@ -10,6 +14,12 @@ export default function Home() {
             .then(data => {
                 console.log(data);
                 setMovies(data);
+            })
+            .then(() => {
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.error("Error fetching movies:", err);
             });
     }, []);
 
