@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
 
 export default function Header() {
+
+    const { user, logout } = useAuth();
+
     return (
         <>
             <header>
@@ -25,6 +29,7 @@ export default function Header() {
 
                         <div className="collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav ms-auto">
+
                                 <li className="nav-item">
                                     <NavLink
                                         className="nav-link text-white"
@@ -34,22 +39,54 @@ export default function Header() {
                                         Home
                                     </NavLink>
                                 </li>
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link text-white"
-                                        to={'/login'}
-                                    >
-                                        Login
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link text-white"
-                                        to={'/register'}
-                                    >
-                                        Register
-                                    </NavLink>
-                                </li>
+
+                                {
+                                    !user && (
+                                        <>
+                                            <li className="nav-item">
+                                                <NavLink
+                                                    className="nav-link text-white"
+                                                    to={'/login'}
+                                                >
+                                                    Login
+                                                </NavLink>
+                                            </li>
+                                            <li className="nav-item">
+                                                <NavLink
+                                                    className="nav-link text-white"
+                                                    to={'/register'}
+                                                >
+                                                    Register
+                                                </NavLink>
+                                            </li>
+                                        </>
+                                    )
+                                }
+
+                                {
+                                    user && (
+                                        <>
+                                            <li className="nav-item">
+                                                <NavLink
+                                                    className="nav-link text-white"
+                                                    to={'/admin'}
+                                                >
+                                                    Admin
+                                                </NavLink>
+                                            </li>
+                                            <li className="nav-item">
+                                                <button
+                                                    className="btn btn-link nav-link text-white"
+                                                    onClick={logout}
+                                                >
+                                                    Logout
+                                                </button>
+                                            </li>
+                                        </>
+                                    )
+                                }
+
+
                             </ul>
                         </div>
                     </div>

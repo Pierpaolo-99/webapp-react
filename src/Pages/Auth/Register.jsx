@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 
 export default function Register() {
+
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const registerUrl = "http://localhost:3000/api/v1/movies/register";
 
@@ -33,6 +37,9 @@ export default function Register() {
             .then(res => res.json())
             .then(data => {
                 console.log("Response data:", data);
+                if (data.user) {
+                    login(form.email, form.password).then(() => navigate('/admin'))
+                }
             })
             .catch(err => {
                 console.error("Error:", err);

@@ -1,10 +1,19 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 
 export default function Admin() {
     const [movies, setMovies] = useState([]);
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
+
+        // Check if user is logged in
+        if (!user) {
+            navigate("/login");
+        }
+
         fetch('http://localhost:3000/api/v1/movies')
             .then(res => res.json())
             .then(data => {
@@ -30,7 +39,7 @@ export default function Admin() {
             <div className="container mt-4">
                 <div className="row align-items-center mb-4">
                     <div className="col-md-6">
-                        <h2 className="text-center text-md-start">Movies List</h2>
+                        <h2 className="text-center text-md-start">{user && `Welcome ${user?.username}`}</h2>
                     </div>
                     <div className="col-md-6 text-center text-md-end">
                         <Link className="btn btn-primary" to="/admin/movies/create">Add Movies</Link>
