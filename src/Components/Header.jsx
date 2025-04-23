@@ -37,17 +37,17 @@ export default function Header() {
                                 <li className="nav-item">
                                     <NavLink
                                         className="nav-link text-white"
-                                        to={'/about'}
+                                        to={'/login'}
                                     >
-                                        About
+                                        Login
                                     </NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <NavLink
                                         className="nav-link text-white"
-                                        to={'/contact'}
+                                        to={'/register'}
                                     >
-                                        Contact
+                                        Register
                                     </NavLink>
                                 </li>
                             </ul>
