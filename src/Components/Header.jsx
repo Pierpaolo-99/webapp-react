@@ -75,12 +75,13 @@ export default function Header() {
                                                 </NavLink>
                                             </li>
                                             <li className="nav-item">
-                                                <button
+                                                <NavLink
                                                     className="btn btn-link nav-link text-white"
+                                                    to={'/login'}
                                                     onClick={logout}
                                                 >
                                                     Logout
-                                                </button>
+                                                </NavLink>
                                             </li>
                                         </>
                                     )
