@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 
 export default function Login() {
 
-    const loginUrl = "http://localhost:3000/api/v1/movies/login";
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const initialForm = {
         email: "",
@@ -21,20 +23,18 @@ export default function Login() {
 
         console.log("Form submitted:", form);
 
-        fetch(loginUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "accept": "application/json"
-            },
-            body: JSON.stringify(form)
-        })
-            .then(res => res.json())
+        login(form.email, form.password)
             .then(data => {
                 console.log("Response data:", data);
+                if (data.user) {
+                    navigate("/admin");
+                } else {
+                    alert("Login failed. Please check your credentials.");
+                }
             })
             .catch(err => {
                 console.error("Error:", err);
+                alert("Login failed. Please try again.");
             })
             .finally(() => {
                 setForm(initialForm);

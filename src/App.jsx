@@ -10,6 +10,7 @@ import Admin from "./Pages/Admin/Admin"
 import CreateMovies from "./Pages/Admin/CreateMovies"
 import NotFound from "./Pages/NotFound"
 import GlobalContext from "./Context/GlobalContext"
+import { AuthProvide } from "./Context/AuthContext"
 
 export default function App() {
 
@@ -17,30 +18,32 @@ export default function App() {
 
   return (
     <>
-      <GlobalContext.Provider value={{ isLoading, setIsLoading }}>
-        <BrowserRouter>
-          <Routes>
+      <AuthProvide>
+        <GlobalContext.Provider value={{ isLoading, setIsLoading }}>
+          <BrowserRouter>
+            <Routes>
 
-            <Route Component={DefaultLayout}>
+              <Route Component={DefaultLayout}>
 
-              <Route path="/" Component={Home} />
-              <Route path="/movies/:id" Component={SingleMovie} />
+                <Route path="/" Component={Home} />
+                <Route path="/movies/:id" Component={SingleMovie} />
 
-              <Route path="/*" Component={NotFound} />
+                <Route path="/*" Component={NotFound} />
 
-              <Route path="/login" Component={Login} />
-              <Route path="/register" Component={Register} />
+                <Route path="/login" Component={Login} />
+                <Route path="/register" Component={Register} />
 
-            </Route>
+              </Route>
 
-            <Route Component={AuthLayout}>
-              <Route path="/admin" Component={Admin} />
-              <Route path="/admin/movies/create" Component={CreateMovies} />
-            </Route>
+              <Route Component={AuthLayout}>
+                <Route path="/admin" Component={Admin} />
+                <Route path="/admin/movies/create" Component={CreateMovies} />
+              </Route>
 
-          </Routes>
-        </BrowserRouter>
-      </GlobalContext.Provider>
+            </Routes>
+          </BrowserRouter>
+        </GlobalContext.Provider>
+      </AuthProvide>
     </>
   )
 }
